@@ -31,6 +31,13 @@ from overlay import OverlayWindow
 from control_panel import ControlPanel
 from hotkey_manager import HotkeyManager
 
+try:
+    import webview
+    from gui_webview import launch_webview_gui
+    HAS_WEBVIEW = True
+except ImportError:
+    HAS_WEBVIEW = False
+
 
 # ─────────────────────────────────────────────────────────────────────────
 class AntiSneakApp:
@@ -57,6 +64,13 @@ class AntiSneakApp:
         self.panel   = ControlPanel(self.root, self.config, self.overlay, toggle_callback=self._toggle_shield)
         self.last_mode = MODE_SPOTLIGHT
 
+        self.webview_window = None
+        if HAS_WEBVIEW:
+            try:
+                self.webview_window = launch_webview_gui(self.config, self.overlay, toggle_callback=self._toggle_shield)
+            except Exception as e:
+                print(f"[!] PyWebView launch notice: {e}")
+
         # ── Background services ──────────────────────────────────────
         self._init_tray()
         self._init_hotkeys()
@@ -65,7 +79,16 @@ class AntiSneakApp:
         self._banner()
 
         # Always show Control Panel GUI on startup
-        self.panel.show()
+        self.show_gui()
+
+    def show_gui(self):
+        if self.webview_window:
+            try:
+                self.webview_window.show()
+            except Exception:
+                self.panel.show()
+        else:
+            self.panel.show()
 
     # ─── System Tray ─────────────────────────────────────────────────
     def _init_tray(self):

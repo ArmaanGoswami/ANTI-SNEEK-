@@ -1,6 +1,4 @@
-# Anti-Sneak Privacy Shield — Python Dependencies
-# Install:  pip install -r requirements.txt
-
-pynput>=1.7.6       # Global keyboard hotkeys
-pystray>=0.19.5     # System tray icon
-Pillow>=10.0.0      # Image creation for tray icon
+pynput>=1.7.6
+Pillow>=10.0.0
+pystray>=0.19.4
+pywebview>=5.0.0

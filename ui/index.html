@@ -6,69 +6,127 @@
   <title>Anti-Sneak Privacy Shield v2.0</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
     
+    :root {
+      --cyan-main: #00f2fe;
+      --cyan-dark: #00a8ff;
+      --black-bg: #030712;
+      --card-bg: rgba(8, 14, 26, 0.85);
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top right, #1a2a40 0%, #0a0f19 50%, #060911 100%);
-      color: #f1f5f9;
+      background: radial-gradient(circle at top right, rgba(0, 242, 254, 0.18) 0%, #050a14 45%, #020408 100%);
+      color: #f8fafc;
       user-select: none;
       overflow: hidden;
     }
 
-    .glow-cyan {
-      box-shadow: 0 0 20px rgba(0, 242, 254, 0.45);
+    /* ── Glowing Neon Styles ────────────────────────────────── */
+    .glow-cyan-lg {
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.5), inset 0 0 10px rgba(0, 242, 254, 0.15);
       border-color: #00f2fe !important;
     }
 
-    .glow-green {
-      box-shadow: 0 0 15px rgba(5, 196, 107, 0.4);
+    .glow-cyan-sm {
+      box-shadow: 0 0 14px rgba(0, 242, 254, 0.4);
     }
 
+    .glow-green {
+      box-shadow: 0 0 18px rgba(5, 196, 107, 0.5);
+    }
+
+    .glow-text-cyan {
+      text-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
+    }
+
+    /* ── Glassmorphism Cards ──────────────────────────────── */
     .glass-card {
-      background: rgba(21, 30, 48, 0.7);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 242, 254, 0.12);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(0, 242, 254, 0.4);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
     }
 
     .glass-card-active {
-      background: rgba(14, 38, 64, 0.85);
-      border: 2px solid #00f2fe;
-      box-shadow: 0 0 18px rgba(0, 242, 254, 0.4);
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.15) 0%, rgba(5, 10, 20, 0.95) 100%);
+      border: 2px solid #00f2fe !important;
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.5), inset 0 0 12px rgba(0, 242, 254, 0.15);
     }
 
-    /* Custom Sliders */
+    /* ── Neon Action Buttons ──────────────────────────────── */
+    .btn-cyan {
+      background: linear-gradient(135deg, #00f2fe 0%, #0099ff 100%);
+      color: #020617;
+      font-weight: 700;
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.5);
+      transition: all 0.2s ease;
+    }
+
+    .btn-cyan:hover {
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.8);
+      transform: translateY(-1px);
+    }
+
+    .btn-cyan-outline {
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      background: rgba(0, 242, 254, 0.05);
+      color: #00f2fe;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cyan-outline:hover {
+      border-color: #00f2fe;
+      background: rgba(0, 242, 254, 0.2);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+    }
+
+    /* ── Custom Range Sliders ────────────────────────────── */
     input[type=range] {
       -webkit-appearance: none;
-      background: #1e293b;
+      background: #090f1d;
       height: 6px;
       border-radius: 3px;
+      border: 1px solid rgba(0, 242, 254, 0.2);
     }
 
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      height: 16px;
-      width: 16px;
+      height: 18px;
+      width: 18px;
       border-radius: 50%;
       background: #00f2fe;
-      box-shadow: 0 0 10px #00f2fe;
+      box-shadow: 0 0 12px #00f2fe, 0 0 24px rgba(0, 242, 254, 0.8);
       cursor: pointer;
+      border: 2px solid #020617;
+      transition: transform 0.1s ease;
+    }
+
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
     }
   </style>
 </head>
-<body class="h-screen w-screen p-4 flex flex-col justify-between select-none">
+<body class="h-screen w-screen p-5 flex flex-col justify-between select-none">
 
-  <!-- ── Top Header ────────────────────────────────────────────── -->
-  <header class="flex items-center justify-between pb-3 border-b border-slate-800">
+  <!-- ── Top Header Bar ────────────────────────────────────────── -->
+  <header class="flex items-center justify-between pb-3 border-b border-cyan-950/60">
     <div class="flex items-center space-x-4">
-      <div class="flex items-center space-x-2">
-        <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="flex items-center space-x-2.5">
+        <svg class="w-7 h-7 text-cyan-400 drop-shadow-[0_0_10px_#00f2fe]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
         </svg>
-        <span class="font-bold text-lg tracking-wider text-slate-100">ANTI-SNEAK PRIVACY SHIELD <span class="text-xs text-slate-400 font-normal">v2.0</span></span>
+        <span class="font-extrabold text-lg tracking-wider text-white">ANTI-SNEAK PRIVACY SHIELD <span class="text-xs text-cyan-400 font-semibold px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/30">v2.0 OLED</span></span>
       </div>
 
-      <div id="status-pill" onclick="toggleShield()" class="cursor-pointer flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500 text-slate-950 font-bold text-xs glow-green transition-all duration-300">
+      <!-- Live Status Badge -->
+      <div id="status-pill" onclick="toggleShield()" class="cursor-pointer flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-xs glow-green transition-all duration-300 hover:scale-105">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
         </svg>
@@ -76,169 +134,168 @@
       </div>
     </div>
 
-    <!-- Nav Tabs & Window controls -->
+    <!-- Navigation & Window Buttons -->
     <div class="flex items-center space-x-6">
       <nav class="flex items-center space-x-2 text-xs">
-        <button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-cyan-400 text-cyan-400 bg-cyan-950/40 glow-cyan font-medium">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        <button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-cyan-400 text-cyan-300 bg-cyan-950/60 glow-cyan-sm font-semibold">
+          <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
           <span>Dashboard</span>
         </button>
-        <button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200">
+        <button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-slate-400 hover:text-cyan-300 transition-colors">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
           <span>Settings</span>
         </button>
-        <button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200">
+        <button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-slate-400 hover:text-cyan-300 transition-colors">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
           <span>Logs</span>
         </button>
-        <button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-slate-400 hover:text-slate-200">
+        <button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-slate-400 hover:text-cyan-300 transition-colors">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
           <span>Help</span>
         </button>
       </nav>
 
-      <div class="flex items-center space-x-3 text-slate-400 text-sm">
-        <button onclick="pywebview.api.minimize()" class="hover:text-white">&minus;</button>
-        <button onclick="pywebview.api.close()" class="hover:text-red-400">&times;</button>
+      <div class="flex items-center space-x-3 text-slate-400 text-base font-bold">
+        <button onclick="pywebview.api.minimize()" class="hover:text-cyan-400 px-1">&minus;</button>
+        <button onclick="pywebview.api.close()" class="hover:text-rose-400 px-1">&times;</button>
       </div>
     </div>
   </header>
 
-  <!-- ── Visual Cards for Privacy Modes ────────────────────────── -->
-  <section class="my-3">
-    <h2 class="text-sm font-semibold text-slate-300 mb-2">Visual Cards for Privacy Modes</h2>
+  <!-- ── Visual Mode Selector Cards (Cyan & Pure Black) ───────────── -->
+  <section class="my-4">
+    <h2 class="text-xs font-bold tracking-wider uppercase text-cyan-400/80 mb-2.5">Visual Cards for Privacy Modes</h2>
     <div class="grid grid-cols-4 gap-4">
       
       <!-- Card 1: Spotlight Mode -->
-      <div id="card-SPOTLIGHT" onclick="setMode('SPOTLIGHT')" class="glass-card-active rounded-xl p-3 flex flex-col items-center cursor-pointer transition-all duration-300 relative group">
-        <div class="absolute top-2 right-2 text-cyan-400">
+      <div id="card-SPOTLIGHT" onclick="setMode('SPOTLIGHT')" class="glass-card-active rounded-xl p-3.5 flex flex-col items-center cursor-pointer transition-all duration-300 relative group">
+        <div class="absolute top-2.5 right-2.5 text-cyan-400">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
         </div>
-        <div class="w-full h-24 bg-slate-950/80 rounded-lg flex items-center justify-center relative overflow-hidden border border-slate-800">
-          <!-- Spotlight graphics -->
-          <div class="w-16 h-12 border border-slate-700 rounded flex items-center justify-center relative">
+        <div class="w-full h-24 bg-[#030712] rounded-lg flex items-center justify-center relative overflow-hidden border border-cyan-950">
+          <!-- Spotlight Graphic -->
+          <div class="w-16 h-12 border border-cyan-500/30 rounded flex items-center justify-center relative bg-[#02050b]">
             <div class="w-6 h-6 rounded-full border border-cyan-400 bg-cyan-400/20 shadow-[0_0_15px_#00f2fe] flex items-center justify-center">
               <div class="w-1.5 h-1.5 bg-cyan-300 rounded-full"></div>
             </div>
-            <!-- Cone effect -->
-            <div class="absolute bottom-0 w-12 h-8 bg-gradient-to-t from-cyan-400/20 to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-0 w-12 h-8 bg-gradient-to-t from-cyan-400/30 to-transparent pointer-events-none"></div>
           </div>
         </div>
-        <span class="mt-2 text-xs font-semibold text-cyan-300">Spotlight Mode</span>
+        <span class="mt-2.5 text-xs font-bold text-cyan-300 tracking-wide glow-text-cyan">Spotlight Mode</span>
       </div>
 
       <!-- Card 2: Side Blinds -->
-      <div id="card-SIDE_BLINDS" onclick="setMode('SIDE_BLINDS')" class="glass-card rounded-xl p-3 flex flex-col items-center cursor-pointer hover:border-slate-600 transition-all duration-300 relative">
-        <div class="absolute top-2 right-2 text-slate-500">
+      <div id="card-SIDE_BLINDS" onclick="setMode('SIDE_BLINDS')" class="glass-card rounded-xl p-3.5 flex flex-col items-center cursor-pointer transition-all duration-300 relative group">
+        <div class="absolute top-2.5 right-2.5 text-slate-500 group-hover:text-cyan-400">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
-        <div class="w-full h-24 bg-slate-950/80 rounded-lg flex items-center justify-center relative overflow-hidden border border-slate-800">
-          <!-- Blinds graphics -->
-          <div class="w-16 h-12 border border-slate-700 rounded flex justify-between overflow-hidden">
-            <div class="w-3.5 h-full bg-slate-900 border-r border-cyan-500/40"></div>
+        <div class="w-full h-24 bg-[#030712] rounded-lg flex items-center justify-center relative overflow-hidden border border-cyan-950">
+          <div class="w-16 h-12 border border-cyan-500/20 rounded flex justify-between overflow-hidden bg-[#02050b]">
+            <div class="w-4 h-full bg-[#030712] border-r border-cyan-400/50 shadow-[0_0_10px_#00f2fe]"></div>
             <div class="flex-1 bg-cyan-400/10"></div>
-            <div class="w-3.5 h-full bg-slate-900 border-l border-cyan-500/40"></div>
+            <div class="w-4 h-full bg-[#030712] border-l border-cyan-400/50 shadow-[0_0_10px_#00f2fe]"></div>
           </div>
         </div>
-        <span class="mt-2 text-xs font-semibold text-slate-300">Side Blinds</span>
+        <span class="mt-2.5 text-xs font-bold text-slate-300 group-hover:text-cyan-300">Side Blinds</span>
       </div>
 
       <!-- Card 3: Grid Louver -->
-      <div id="card-GRID" onclick="setMode('GRID')" class="glass-card rounded-xl p-3 flex flex-col items-center cursor-pointer hover:border-slate-600 transition-all duration-300 relative">
-        <div class="absolute top-2 right-2 text-slate-500">
+      <div id="card-GRID" onclick="setMode('GRID')" class="glass-card rounded-xl p-3.5 flex flex-col items-center cursor-pointer transition-all duration-300 relative group">
+        <div class="absolute top-2.5 right-2.5 text-slate-500 group-hover:text-cyan-400">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
         </div>
-        <div class="w-full h-24 bg-slate-950/80 rounded-lg flex items-center justify-center relative overflow-hidden border border-slate-800">
-          <!-- Mesh Louver graphics -->
-          <div class="w-16 h-12 border border-slate-700 rounded relative overflow-hidden flex items-center justify-center">
-            <div class="absolute inset-0 bg-[linear-gradient(45deg,#00f2fe_1px,transparent_1px),linear-gradient(-45deg,#00f2fe_1px,transparent_1px)] bg-[size:6px_6px] opacity-30"></div>
+        <div class="w-full h-24 bg-[#030712] rounded-lg flex items-center justify-center relative overflow-hidden border border-cyan-950">
+          <div class="w-16 h-12 border border-cyan-500/20 rounded relative overflow-hidden flex items-center justify-center bg-[#02050b]">
+            <div class="absolute inset-0 bg-[linear-gradient(45deg,#00f2fe_1px,transparent_1px),linear-gradient(-45deg,#00f2fe_1px,transparent_1px)] bg-[size:6px_6px] opacity-40"></div>
           </div>
         </div>
-        <span class="mt-2 text-xs font-semibold text-slate-300">Grid Louver</span>
+        <span class="mt-2.5 text-xs font-bold text-slate-300 group-hover:text-cyan-300">Grid Louver</span>
       </div>
 
       <!-- Card 4: Full Blackout -->
-      <div id="card-BLACKOUT" onclick="setMode('BLACKOUT')" class="glass-card rounded-xl p-3 flex flex-col items-center cursor-pointer hover:border-slate-600 transition-all duration-300 relative">
-        <div class="absolute top-2 right-2 text-slate-500">
+      <div id="card-BLACKOUT" onclick="setMode('BLACKOUT')" class="glass-card rounded-xl p-3.5 flex flex-col items-center cursor-pointer transition-all duration-300 relative group">
+        <div class="absolute top-2.5 right-2.5 text-slate-500 group-hover:text-cyan-400">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
         </div>
-        <div class="w-full h-24 bg-slate-950/80 rounded-lg flex items-center justify-center relative overflow-hidden border border-slate-800">
-          <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+        <div class="w-full h-24 bg-[#030712] rounded-lg flex items-center justify-center relative overflow-hidden border border-cyan-950">
+          <svg class="w-8 h-8 text-cyan-500/60 group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_10px_#00f2fe]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
         </div>
-        <span class="mt-2 text-xs font-semibold text-slate-300">Full Blackout</span>
+        <span class="mt-2.5 text-xs font-bold text-slate-300 group-hover:text-cyan-300">Full Blackout</span>
       </div>
 
     </div>
   </section>
 
-  <!-- ── Lower Section (2 Columns) ─────────────────────────────── -->
+  <!-- ── Lower Section (Configuration & Hotkeys) ────────────────── -->
   <section class="grid grid-cols-3 gap-4 flex-1 my-1">
     
     <!-- Left Column: Spotlight Configuration (Span 2) -->
     <div class="col-span-2 flex flex-col justify-between">
-      <h2 class="text-sm font-semibold text-slate-300 mb-2">Spotlight Configuration</h2>
+      <h2 class="text-xs font-bold tracking-wider uppercase text-cyan-400/80 mb-2">Spotlight Configuration</h2>
       
       <div class="glass-card rounded-xl p-4 flex-1 flex flex-col justify-between">
         
         <!-- Spotlight Size Control Box -->
         <div>
-          <span class="text-xs font-medium text-slate-400">Spotlight Size Control</span>
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-xs font-semibold text-slate-300">Spotlight Radius Size</span>
+            <span id="size-label" class="text-xs font-bold font-mono text-cyan-400 glow-text-cyan">250 px</span>
+          </div>
           
           <div class="my-3">
             <input type="range" id="size-slider" min="50" max="600" value="250" oninput="updateRadius(this.value)" class="w-full">
-            <div class="text-center text-[10px] text-cyan-400 mt-1 font-semibold" id="size-label">Medium (250px)</div>
           </div>
 
-          <!-- Buttons Row: BODA, CHHOTA, +/-, % -->
+          <!-- Buttons Row: BODA Left, CHHOTA, +/-, % -->
           <div class="flex items-center space-x-3 mt-4">
-            <button onclick="increaseRadius()" class="flex-1 py-2 px-3 rounded-lg border border-slate-700 bg-slate-900/80 hover:bg-slate-800 text-xs font-semibold flex items-center justify-center space-x-1">
-              <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+            <button onclick="increaseRadius()" class="flex-1 py-2.5 px-3 rounded-lg btn-cyan-outline text-xs font-bold flex items-center justify-center space-x-1.5">
+              <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
               <span>BODA Left</span>
             </button>
 
-            <button onclick="decreaseRadius()" class="flex-1 py-2 px-3 rounded-lg border-2 border-cyan-400 bg-cyan-950/60 glow-cyan text-xs font-bold text-cyan-300 flex items-center justify-center space-x-1">
-              <svg class="w-3.5 h-3.5 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9L4 4m0 0l5 5M4 4v5m0-5h5m11 5l-5-5m5 5v-5m0 5h-5m-5 11l5 5m-5-5v-5m0 5h5m-11 0l-5 5m5-5v-5m0 5H4"></path></svg>
+            <button onclick="decreaseRadius()" class="flex-1 py-2.5 px-3 rounded-lg btn-cyan text-xs font-extrabold flex items-center justify-center space-x-1.5">
+              <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 9L4 4m0 0l5 5M4 4v5m0-5h5m11 5l-5-5m5 5v-5m0 5h-5m-5 11l5 5m-5-5v-5m0 5h5m-11 0l-5 5m5-5v-5m0 5H4"></path></svg>
               <span>CHHOTA</span>
             </button>
 
-            <div class="flex items-center space-x-1 bg-slate-900 border border-slate-700 rounded-lg p-1">
-              <button onclick="increaseRadius()" class="px-2 py-0.5 text-slate-300 hover:text-white bg-slate-800 rounded font-bold text-xs">+</button>
-              <button onclick="decreaseRadius()" class="px-2 py-0.5 text-slate-300 hover:text-white bg-slate-800 rounded font-bold text-xs">&minus;</button>
+            <div class="flex items-center space-x-1 bg-[#030712] border border-cyan-900/60 rounded-lg p-1">
+              <button onclick="increaseRadius()" class="px-2.5 py-1 text-cyan-300 hover:text-white hover:bg-cyan-950 rounded font-bold text-xs">+</button>
+              <button onclick="decreaseRadius()" class="px-2.5 py-1 text-cyan-300 hover:text-white hover:bg-cyan-950 rounded font-bold text-xs">&minus;</button>
             </div>
 
-            <div class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300">
+            <div class="px-3.5 py-2 bg-[#030712] border border-cyan-500/40 rounded-lg text-xs font-mono font-bold text-cyan-400">
               45%
             </div>
           </div>
         </div>
 
         <!-- Presets & Fine Sliders Row -->
-        <div class="mt-4 pt-3 border-t border-slate-800 grid grid-cols-2 gap-4">
+        <div class="mt-4 pt-3.5 border-t border-cyan-950/80 grid grid-cols-2 gap-4">
           <div>
-            <span class="text-xs font-medium text-slate-400 block mb-2">Presets</span>
-            <div class="flex space-x-1.5">
-              <button onclick="applyPreset('office')" class="px-3 py-1 rounded bg-cyan-400 text-slate-950 font-bold text-[11px] glow-cyan">OFFICE</button>
-              <button onclick="applyPreset('public')" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px]">COFFEE SHOP</button>
-              <button onclick="applyPreset('night')" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px]">CINEMA</button>
+            <span class="text-xs font-bold text-slate-300 block mb-2">Quick Presets</span>
+            <div class="flex space-x-2">
+              <button onclick="applyPreset('office')" class="px-3 py-1.5 rounded-md btn-cyan text-[11px] font-extrabold">OFFICE</button>
+              <button onclick="applyPreset('public')" class="px-3 py-1.5 rounded-md btn-cyan-outline text-[11px] font-semibold">COFFEE SHOP</button>
+              <button onclick="applyPreset('night')" class="px-3 py-1.5 rounded-md btn-cyan-outline text-[11px] font-semibold">CINEMA</button>
             </div>
           </div>
 
           <div class="space-y-2 text-xs">
-            <div class="flex justify-between text-[11px]">
+            <div class="flex justify-between text-[11px] font-semibold">
               <span class="text-slate-400">Transparency</span>
-              <span class="text-slate-200">70%</span>
+              <span class="text-cyan-400 font-mono">70%</span>
             </div>
             <input type="range" min="10" max="100" value="70" class="w-full">
 
-            <div class="flex justify-between text-[11px]">
+            <div class="flex justify-between text-[11px] font-semibold">
               <span class="text-slate-400">Feathering</span>
-              <span class="text-slate-200">20%</span>
+              <span class="text-cyan-400 font-mono">20%</span>
             </div>
             <input type="range" min="0" max="50" value="20" class="w-full">
 
-            <div class="flex justify-between text-[11px]">
+            <div class="flex justify-between text-[11px] font-semibold">
               <span class="text-slate-400">Dimming</span>
-              <span class="text-slate-200">85%</span>
+              <span class="text-cyan-400 font-mono">85%</span>
             </div>
             <input type="range" min="10" max="100" value="85" class="w-full">
           </div>
@@ -247,45 +304,46 @@
       </div>
     </div>
 
-    <!-- Right Column: HOTKEY STATUS Table -->
+    <!-- Right Column: HOTKEY STATUS Table (Cyan & Black) -->
     <div class="flex flex-col">
-      <h2 class="text-sm font-semibold text-slate-300 mb-2">HOTKEY STATUS</h2>
+      <h2 class="text-xs font-bold tracking-wider uppercase text-cyan-400/80 mb-2">HOTKEY STATUS</h2>
       
       <div class="glass-card rounded-xl p-4 flex-1 flex flex-col justify-between">
         <table class="w-full text-left text-xs">
           <thead>
-            <tr class="text-slate-400 border-b border-slate-800 pb-2">
-              <th class="pb-2 font-medium">Function</th>
-              <th class="pb-2 font-medium">Hotkey</th>
-              <th class="pb-2 font-medium text-right">Status</th>
+            <tr class="text-cyan-400/70 border-b border-cyan-950 pb-2">
+              <th class="pb-2 font-bold uppercase tracking-wider text-[10px]">Function</th>
+              <th class="pb-2 font-bold uppercase tracking-wider text-[10px]">Hotkey</th>
+              <th class="pb-2 font-bold uppercase tracking-wider text-[10px] text-right">Status</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-800/60">
+          <tbody class="divide-y divide-cyan-950/60">
             <tr>
-              <td class="py-2.5 text-slate-300">Spotlight Mode</td>
-              <td class="py-2.5 font-mono text-cyan-400 text-[11px]">Ctrl+Shift+L</td>
-              <td class="py-2.5 text-right font-semibold text-emerald-400">Active</td>
+              <td class="py-2.5 font-semibold text-slate-200">Spotlight Mode</td>
+              <td class="py-2.5"><span class="px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-[11px] font-bold">Ctrl+Shift+L</span></td>
+              <td class="py-2.5 text-right font-extrabold text-emerald-400">Active</td>
             </tr>
             <tr>
-              <td class="py-2.5 text-slate-300">Side Blinds</td>
-              <td class="py-2.5 font-mono text-cyan-400 text-[11px]">Ctrl+Alt+B</td>
-              <td class="py-2.5 text-right font-semibold text-emerald-400">Enabled</td>
+              <td class="py-2.5 font-semibold text-slate-200">Side Blinds</td>
+              <td class="py-2.5"><span class="px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-[11px] font-bold">Ctrl+Alt+B</span></td>
+              <td class="py-2.5 text-right font-extrabold text-emerald-400">Enabled</td>
             </tr>
             <tr>
-              <td class="py-2.5 text-slate-300">Full Blackout</td>
-              <td class="py-2.5 font-mono text-cyan-400 text-[11px]">Win+Esc</td>
-              <td class="py-2.5 text-right font-semibold text-rose-400">Inactive</td>
+              <td class="py-2.5 font-semibold text-slate-200">Full Blackout</td>
+              <td class="py-2.5"><span class="px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-[11px] font-bold">Win+Esc</span></td>
+              <td class="py-2.5 text-right font-extrabold text-rose-400">Inactive</td>
             </tr>
             <tr>
-              <td class="py-2.5 text-slate-300">Open Panel</td>
-              <td class="py-2.5 font-mono text-cyan-400 text-[11px]">Ctrl+,</td>
-              <td class="py-2.5 text-right font-semibold text-emerald-400">Enabled</td>
+              <td class="py-2.5 font-semibold text-slate-200">Open Panel</td>
+              <td class="py-2.5"><span class="px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-[11px] font-bold">Ctrl+,</span></td>
+              <td class="py-2.5 text-right font-extrabold text-emerald-400">Enabled</td>
             </tr>
           </tbody>
         </table>
 
-        <div class="mt-4 pt-3 border-t border-slate-800 text-[10px] text-slate-400 text-center">
-          🟢 Win32 System Hotkey Engine Active
+        <div class="mt-4 pt-3 border-t border-cyan-950 text-[10px] text-cyan-400/80 font-semibold text-center flex items-center justify-center space-x-1.5">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#00f2fe]"></span>
+          <span>Win32 System Hotkey Engine Active</span>
         </div>
       </div>
     </div>
@@ -314,16 +372,16 @@
         const el = document.getElementById('card-' + m);
         if (el) {
           if (m === mode) {
-            el.className = "glass-card-active rounded-xl p-3 flex flex-col items-center cursor-pointer transition-all duration-300 relative group";
+            el.className = "glass-card-active rounded-xl p-3.5 flex flex-col items-center cursor-pointer transition-all duration-300 relative group";
           } else {
-            el.className = "glass-card rounded-xl p-3 flex flex-col items-center cursor-pointer hover:border-slate-600 transition-all duration-300 relative";
+            el.className = "glass-card rounded-xl p-3.5 flex flex-col items-center cursor-pointer transition-all duration-300 relative group";
           }
         }
       });
     }
 
     function updateRadius(val) {
-      document.getElementById('size-label').innerText = `Radius (${val}px)`;
+      document.getElementById('size-label').innerText = `${val} px`;
       if (window.pywebview) {
         pywebview.api.set_radius(val);
       }
@@ -333,7 +391,7 @@
       if (window.pywebview) {
         pywebview.api.increase_radius().then(val => {
           document.getElementById('size-slider').value = val;
-          document.getElementById('size-label').innerText = `Radius (${val}px)`;
+          document.getElementById('size-label').innerText = `${val} px`;
         });
       }
     }
@@ -342,7 +400,7 @@
       if (window.pywebview) {
         pywebview.api.decrease_radius().then(val => {
           document.getElementById('size-slider').value = val;
-          document.getElementById('size-label').innerText = `Radius (${val}px)`;
+          document.getElementById('size-label').innerText = `${val} px`;
         });
       }
     }
@@ -357,10 +415,10 @@
       const pill = document.getElementById('status-pill');
       const text = document.getElementById('status-text');
       if (state.active) {
-        pill.className = "cursor-pointer flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500 text-slate-950 font-bold text-xs glow-green transition-all duration-300";
+        pill.className = "cursor-pointer flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-xs glow-green transition-all duration-300 hover:scale-105";
         text.innerText = "STATUS: ACTIVE & SECURED";
       } else {
-        pill.className = "cursor-pointer flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500 text-slate-950 font-bold text-xs transition-all duration-300";
+        pill.className = "cursor-pointer flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-rose-500 text-slate-950 font-extrabold text-xs transition-all duration-300 hover:scale-105";
         text.innerText = "STATUS: INACTIVE";
       }
     }

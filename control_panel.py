@@ -105,9 +105,8 @@ class ControlPanel:
         # Listen for live config changes
         self.config.on_change(self._sync_ui_from_config)
 
-        # Show window on launch
-        self.window.deiconify()
-        self.window.lift()
+        # Start hidden by default
+        self.window.withdraw()
 
     def show(self):
         self._sync_ui_from_config()

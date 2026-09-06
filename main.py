@@ -63,13 +63,7 @@ class AntiSneakApp:
         self.overlay = OverlayWindow(self.root, self.config)
         self.panel   = ControlPanel(self.root, self.config, self.overlay, toggle_callback=self._toggle_shield)
         self.last_mode = MODE_SPOTLIGHT
-
         self.webview_window = None
-        if HAS_WEBVIEW:
-            try:
-                self.webview_window = launch_webview_gui(self.config, self.overlay, toggle_callback=self._toggle_shield)
-            except Exception as e:
-                print(f"[!] PyWebView launch notice: {e}")
 
         # ── Background services ──────────────────────────────────────
         self._init_tray()
@@ -77,9 +71,6 @@ class AntiSneakApp:
 
         # ── Startup banner ───────────────────────────────────────────
         self._banner()
-
-        # Always show Control Panel GUI on startup
-        self.show_gui()
 
     def show_gui(self):
         if self.webview_window:
@@ -121,7 +112,7 @@ class AntiSneakApp:
                     0, lambda: self._set_mode(m))
 
             def _settings(icon, item):
-                self.root.after(0, self.panel.show)
+                self.root.after(0, self.show_gui)
 
             def _quit(icon, item):
                 icon.stop()
@@ -210,12 +201,34 @@ class AntiSneakApp:
         if hasattr(self, "hotkey_mgr") and self.hotkey_mgr:
             self.hotkey_mgr.stop()
         self.overlay.deactivate()
-        self.root.quit()
-        self.root.destroy()
+        try:
+            self.root.quit()
+            self.root.destroy()
+        except Exception:
+            pass
 
     def run(self):
-        """Start the Tkinter main-loop (blocks until exit)."""
-        self.root.mainloop()
+        """Start the application main-loop."""
+        if HAS_WEBVIEW:
+            import time
+            def _tk_pump():
+                while True:
+                    try:
+                        self.root.update()
+                        time.sleep(0.016)
+                    except Exception:
+                        break
+
+            t = threading.Thread(target=_tk_pump, daemon=True)
+            t.start()
+
+            print("[+] Launching Edge WebView2 UI (Pixel-Perfect Modern Dashboard)...")
+            self.webview_window = launch_webview_gui(self.config, self.overlay, toggle_callback=self._toggle_shield)
+            webview.start()
+        else:
+            print("[!] PyWebView unavailable -> Launching Tkinter ControlPanel...")
+            self.panel.show()
+            self.root.mainloop()
 
     # ─── Banner ──────────────────────────────────────────────────────
     @staticmethod

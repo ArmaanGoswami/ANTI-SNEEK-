@@ -20,7 +20,30 @@
       background: radial-gradient(circle at top right, rgba(0, 242, 254, 0.18) 0%, #050a14 45%, #020408 100%);
       color: #f8fafc;
       user-select: none;
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* ── Custom Cyan & Black Scrollbar ───────────────────────────── */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #030712;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #00f2fe 0%, #00a8ff 100%);
+      border-radius: 4px;
+      box-shadow: 0 0 10px #00f2fe;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00f2fe;
+      box-shadow: 0 0 16px #00f2fe;
     }
 
     /* ── Glowing Neon Styles ────────────────────────────────── */
@@ -113,7 +136,7 @@
     }
   </style>
 </head>
-<body class="h-screen w-screen p-5 flex flex-col justify-between select-none">
+<body class="min-h-screen w-screen p-5 flex flex-col justify-between select-none">
 
   <!-- ── Top Header Bar ────────────────────────────────────────── -->
   <header class="flex items-center justify-between pb-3 border-b border-cyan-950/60">
@@ -155,9 +178,11 @@
         </button>
       </nav>
 
+      <!-- Window Control Buttons (Minimize, Maximize, Close) -->
       <div class="flex items-center space-x-3 text-slate-400 text-base font-bold">
-        <button onclick="pywebview.api.minimize()" class="hover:text-cyan-400 px-1">&minus;</button>
-        <button onclick="pywebview.api.close()" class="hover:text-rose-400 px-1">&times;</button>
+        <button onclick="pywebview.api.minimize()" class="hover:text-cyan-400 px-1 text-lg" title="Minimize">&minus;</button>
+        <button onclick="pywebview.api.toggle_maximize()" class="hover:text-cyan-400 px-1 text-xs" title="Maximize / Restore">&#9633;</button>
+        <button onclick="pywebview.api.close()" class="hover:text-rose-400 px-1 text-lg" title="Close">&times;</button>
       </div>
     </div>
   </header>

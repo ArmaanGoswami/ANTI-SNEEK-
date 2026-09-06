@@ -47,6 +47,16 @@ class WebviewApi:
             self.overlay.activate()
         return self.config._settings
 
+    def toggle_maximize(self):
+        if self._window:
+            if getattr(self, "_is_maximized", False):
+                self._window.restore()
+                self._is_maximized = False
+            else:
+                self._window.maximize()
+                self._is_maximized = True
+            return self._is_maximized
+
     def minimize(self):
         if self._window:
             self._window.minimize()

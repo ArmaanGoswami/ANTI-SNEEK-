@@ -187,8 +187,33 @@
     </div>
   </header>
 
+  <!-- ── Master Hero Power Control Card (Unmissable Toggle Switch) ── -->
+  <section class="my-3">
+    <div class="glass-card rounded-xl p-4 flex items-center justify-between border border-cyan-500/30 bg-gradient-to-r from-cyan-950/40 via-[#060b17] to-[#030712]">
+      <div class="flex items-center space-x-4">
+        <div id="master-icon-box" class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-400 glow-green">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Master Shield Switch</span>
+            <span id="hero-status-badge" class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">ACTIVE</span>
+          </div>
+          <h3 id="hero-status-title" class="text-base font-extrabold text-white mt-0.5">Privacy Shield is Currently ACTIVE</h3>
+          <p id="hero-status-desc" class="text-xs text-slate-400">OLED protection active. Cursor area visible while surrounding screen is dark.</p>
+        </div>
+      </div>
+
+      <!-- Big Action Power Button -->
+      <button id="master-power-btn" onclick="toggleShield()" class="py-3 px-6 rounded-xl btn-cyan text-slate-950 font-extrabold text-sm flex items-center space-x-2 cursor-pointer shadow-[0_0_20px_#00f2fe] hover:scale-105 transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        <span id="master-power-btn-text">⚡ ENABLE PRIVACY SHIELD</span>
+      </button>
+    </div>
+  </section>
+
   <!-- ── Visual Mode Selector Cards (Cyan & Pure Black) ───────────── -->
-  <section class="my-4">
+  <section class="my-3">
     <h2 class="text-xs font-bold tracking-wider uppercase text-cyan-400/80 mb-2.5">Visual Cards for Privacy Modes</h2>
     <div class="grid grid-cols-4 gap-4">
       
@@ -439,12 +464,41 @@
     function updateUIState(state) {
       const pill = document.getElementById('status-pill');
       const text = document.getElementById('status-text');
+      const heroBadge = document.getElementById('hero-status-badge');
+      const heroTitle = document.getElementById('hero-status-title');
+      const heroDesc = document.getElementById('hero-status-desc');
+      const masterBtn = document.getElementById('master-power-btn');
+      const masterBtnText = document.getElementById('master-power-btn-text');
+      const masterIconBox = document.getElementById('master-icon-box');
+
       if (state.active) {
-        pill.className = "cursor-pointer flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-xs glow-green transition-all duration-300 hover:scale-105";
-        text.innerText = "STATUS: ACTIVE & SECURED";
+        if (pill) {
+          pill.className = "cursor-pointer flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-xs glow-green transition-all duration-300 hover:scale-105";
+          text.innerText = "STATUS: ACTIVE & SECURED";
+        }
+        if (heroBadge) {
+          heroBadge.className = "px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40";
+          heroBadge.innerText = "ACTIVE";
+          heroTitle.innerText = "Privacy Shield is Currently ACTIVE";
+          heroDesc.innerText = "OLED protection is shielding your monitor. Click button to disable.";
+          masterBtn.className = "py-3 px-6 rounded-xl bg-gradient-to-r from-rose-500 to-red-600 text-white font-extrabold text-sm flex items-center space-x-2 cursor-pointer shadow-[0_0_20px_rgba(244,63,94,0.6)] hover:scale-105 transition-all";
+          masterBtnText.innerText = "⏹ DISABLE SHIELD";
+          masterIconBox.className = "w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-400 glow-green";
+        }
       } else {
-        pill.className = "cursor-pointer flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-rose-500 text-slate-950 font-extrabold text-xs transition-all duration-300 hover:scale-105";
-        text.innerText = "STATUS: INACTIVE";
+        if (pill) {
+          pill.className = "cursor-pointer flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-rose-500 text-slate-950 font-extrabold text-xs transition-all duration-300 hover:scale-105";
+          text.innerText = "STATUS: INACTIVE (DISABLED)";
+        }
+        if (heroBadge) {
+          heroBadge.className = "px-2 py-0.5 rounded text-[10px] font-extrabold bg-rose-500/20 text-rose-400 border border-rose-500/40";
+          heroBadge.innerText = "INACTIVE";
+          heroTitle.innerText = "Privacy Shield is Currently INACTIVE";
+          heroDesc.innerText = "Screen is unprotected. Click button to enable instant OLED shield.";
+          masterBtn.className = "py-3 px-6 rounded-xl btn-cyan text-slate-950 font-extrabold text-sm flex items-center space-x-2 cursor-pointer shadow-[0_0_20px_#00f2fe] hover:scale-105 transition-all";
+          masterBtnText.innerText = "⚡ ENABLE SHIELD";
+          masterIconBox.className = "w-12 h-12 rounded-xl bg-rose-500/20 border border-rose-500/50 flex items-center justify-center text-rose-400";
+        }
       }
     }
   </script>

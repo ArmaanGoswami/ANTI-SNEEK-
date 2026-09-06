@@ -2,7 +2,7 @@
 
 > **OLED-Optimized Screen Privacy Protection & Anti-Peeping Control Center for Windows**
 
-![Anti-Sneak Privacy Shield UI](preview.jpg)
+
 
 ---
 
